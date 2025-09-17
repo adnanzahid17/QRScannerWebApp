@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mobile Barcode Scanner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div>
+          <h1>Mobile Barcode Scanner</h1>
+          <p class="muted">
+            Sign in with Firebase, call secured REST APIs, and scan barcodes with your phone's camera directly from the
+            browser.
+          </p>
+        </div>
+        <div class="status" id="header-status">
+          <span class="status-indicator" id="status-indicator"></span>
+          <span id="status-text">Initializing…</span>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card" id="auth-card">
+          <h2>Authentication</h2>
+          <div id="signed-in" class="hidden">
+            <p class="muted">Signed in as <span id="user-email"></span></p>
+            <button class="primary" id="sign-out">Sign out</button>
+          </div>
+          <form id="auth-form" autocomplete="on">
+            <label>
+              Email
+              <input id="email" type="email" name="email" placeholder="you@example.com" required />
+            </label>
+            <label>
+              Password
+              <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="At least 6 characters"
+                minlength="6"
+                required
+              />
+            </label>
+            <button class="primary" type="submit" id="auth-submit">Sign in</button>
+          </form>
+          <button class="link" type="button" id="auth-toggle">Don't have an account? Create one</button>
+          <p id="auth-message" class="muted small" role="status"></p>
+        </section>
+
+        <section class="card" id="api-card">
+          <h2>REST API Explorer</h2>
+          <form id="api-form">
+            <label>
+              Endpoint URL
+              <input id="api-url" type="url" required value="https://jsonplaceholder.typicode.com/todos/1" />
+            </label>
+            <div class="row">
+              <label>
+                Method
+                <select id="api-method">
+                  <option value="GET">GET</option>
+                  <option value="POST">POST</option>
+                  <option value="PUT">PUT</option>
+                  <option value="PATCH">PATCH</option>
+                  <option value="DELETE">DELETE</option>
+                </select>
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" id="api-auth" checked />
+                Include Firebase ID token
+              </label>
+            </div>
+            <label>
+              Request body (JSON)
+              <textarea id="api-body" rows="4" placeholder='{ "completed": true }'></textarea>
+            </label>
+            <button class="primary" type="submit" id="api-submit">Send request</button>
+          </form>
+          <p class="muted" id="api-status"></p>
+          <pre class="response hidden" id="api-response"></pre>
+        </section>
+
+        <section class="card" id="scanner-card">
+          <h2>Barcode Scanner</h2>
+          <p class="muted small">
+            Tap start and align the barcode within the frame. Works great on mobile browsers—remember to allow camera access.
+          </p>
+          <div class="scanner" id="scanner">
+            <video id="scanner-preview" playsinline muted></video>
+            <div class="overlay" id="scanner-overlay">Camera inactive</div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="scanner-start">Start scanning</button>
+            <button class="secondary" id="scanner-stop" disabled>Stop</button>
+          </div>
+          <p class="success" id="scanner-result" role="status"></p>
+          <p class="error" id="scanner-error"></p>
+        </section>
+      </main>
+
+      <section class="card info">
+        <h2>Scan result</h2>
+        <p id="info-last-scan">Start the scanner to read a barcode. The decoded value will appear here.</p>
+        <p class="muted small">
+          Tip: Deploy this app and open it from your phone's browser for the best scanning experience.
+        </p>
+      </section>
+
+      <footer class="footer">
+        <p>Set your Firebase project keys in <code>firebase-config.js</code> before using the app.</p>
+      </footer>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
